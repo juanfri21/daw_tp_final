@@ -25,10 +25,10 @@ class ViewMainPage
             let checkedStr="";
             if(list[i].state=="1")
                 checkedStr="checked";
-
             switch(list[i].type)
             {
-                case 0: // Lampara                     
+                case 0: // Lampara     
+
                     items+="<li class='collection-item avatar'> \
                                 <img src='images/lightbulb.png' alt='' class='circle'> \
                                 <span class='title'>"+list[i].name+"</span> \
@@ -78,6 +78,7 @@ class Main implements GETResponseListener, EventListenerObject, POSTResponseList
 
     handleEvent(evt:Event):void
     {
+        //todo: filtrar por elemento clickeado y realizar un get segun el boton clickeado
         let sw: HTMLElement = this.myf.getElementByEvent(evt);
         console.log("click en device:"+sw.id);
 
@@ -88,17 +89,30 @@ class Main implements GETResponseListener, EventListenerObject, POSTResponseList
     handleGETResponse(status:number,response:string):void{
       if(status==200)
       {
-          console.log(response);
-          let data:DeviceInt[] = JSON.parse(response);
-          console.log(data);
-          this.view.showDevices(data);    
-          
-          for(let i in data)
-          {
-              let sw:HTMLElement = this.myf.getElementById("dev_"+data[i].id);
-              sw.addEventListener("click",this);                
-          }
+        console.log(response);
+        let data:DeviceInt[] = JSON.parse(response);
+        console.log(data);
+        this.view.showDevices(data);
+    
+        //todo: generar los botones dinamicamente segun los elementos de la lista,ej: lampara,persiana,etc
+        let btns:list = ["todos", "lamparas", "persianas"];
+        
+        for (let i of btns)
+        {
+            this.enableEventListener("btn_" + i);
+        }
+
+        for(let i in data)
+        {
+            this.enableEventListener("dev_" + data[i].id);  
+        }
       }
+    }
+
+    enableEventListener(element_id:string):void
+    {
+        let html_element:HTMLElement = this.myf.getElementById(element_id);
+        html_element.addEventListener("click",this);
     }
 
     handlePOSTResponse(status:number,response:string):void{

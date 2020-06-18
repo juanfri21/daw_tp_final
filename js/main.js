@@ -11,7 +11,7 @@ class ViewMainPage {
             if (list[i].state == "1")
                 checkedStr = "checked";
             switch (list[i].type) {
-                case 0: // Lampara                     
+                case 0: // Lampara     
                     items += "<li class='collection-item avatar'> \
                                 <img src='images/lightbulb.png' alt='' class='circle'> \
                                 <span class='title'>" + list[i].name + "</span> \
@@ -54,6 +54,7 @@ class ViewMainPage {
 }
 class Main {
     handleEvent(evt) {
+        //todo: filtrar por elemento clickeado y realizar un get segun el boton clickeado
         let sw = this.myf.getElementByEvent(evt);
         console.log("click en device:" + sw.id);
         let data = { "id": sw.id, "state": this.view.getSwitchStateById(sw.id) };
@@ -65,11 +66,19 @@ class Main {
             let data = JSON.parse(response);
             console.log(data);
             this.view.showDevices(data);
+            //todo: generar los botones dinamicamente segun los elementos de la lista,ej: lampara,persiana,etc
+            let btns = ["todos", "lamparas", "persianas"];
+            for (let i of btns) {
+                this.enableEventListener("btn_" + i);
+            }
             for (let i in data) {
-                let sw = this.myf.getElementById("dev_" + data[i].id);
-                sw.addEventListener("click", this);
+                this.enableEventListener("dev_" + data[i].id);
             }
         }
+    }
+    enableEventListener(element_id) {
+        let html_element = this.myf.getElementById(element_id);
+        html_element.addEventListener("click", this);
     }
     handlePOSTResponse(status, response) {
         if (status == 200) {
