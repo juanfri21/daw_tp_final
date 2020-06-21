@@ -1,0 +1,19 @@
+##   Ejecutar contenedor de base de datos mysql
+
+./start_mysql.sh mysql-net "$PWD"/db
+
+##   Ejecutar contenedor gestor de BD phpmyadmin
+
+./run_phpadmin.sh mysql-net mysql-server 8085
+
+Chequear que PHPMyAdmin está funcionando en ​http://localhost:8085
+
+##   Ejecutar contenedor nodejs
+
+./serve_node_app_net.sh "$PWD" ws/index.js 8001 mysql-net
+
+Chequear que la aplicación esté corriendo en ​http://localhost:8001
+
+##   Para ejecutar el contenedor del compilador de typescript
+
+./src/compile_ts.sh ./src ./js

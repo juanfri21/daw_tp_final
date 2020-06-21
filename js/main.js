@@ -56,9 +56,27 @@ class Main {
     handleEvent(evt) {
         //todo: filtrar por elemento clickeado y realizar un get segun el boton clickeado
         let sw = this.myf.getElementByEvent(evt);
-        console.log("click en device:" + sw.id);
-        let data = { "id": sw.id, "state": this.view.getSwitchStateById(sw.id) };
-        this.myf.requestPOST("devices", data, this);
+        console.log("click en device:" + sw.id[0]);
+        if (sw.id[0] == "b") {
+            switch (sw.id) {
+                case "btn_todos":
+                    console.log("todos");
+                    this.myf.requestGET("devices?filter=0", this);
+                    break;
+                case "btn_persianas":
+                    this.myf.requestGET("devices?filter=1", this);
+                    break;
+                case "btn_lamparas":
+                    this.myf.requestGET("devices?filter=2", this);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else {
+            let data = { "id": sw.id, "state": this.view.getSwitchStateById(sw.id) };
+            this.myf.requestPOST("devices", data, this);
+        }
     }
     handleGETResponse(status, response) {
         if (status == 200) {
