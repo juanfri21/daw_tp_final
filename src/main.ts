@@ -118,7 +118,6 @@ class Main implements GETResponseListener, EventListenerObject, POSTResponseList
         {
             console.log(response);
             let data:DeviceInt[] = JSON.parse(response);
-            console.log(data);
             this.view.showDevices(data);
 
             //todo: generar los botones dinamicamente segun los elementos de la lista,ej: lampara,persiana,etc

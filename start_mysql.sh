@@ -3,7 +3,7 @@
 # Project: FIUBA - CEIoT - DAW 
 # Date: June 2020
 # Usage:
-#       ./start_mysql.sh mysql-net "$PWD"/database
+#       ./start_mysql.sh mysql-net "$PWD"/db
 # 
 ###############################################################################
 

@@ -1,3 +1,36 @@
+● MySQL.
+    ○ Nombre de la imagen: mysql:5.7
+    ○ Nombre contenedor: mysql-server.
+    ○ Network: mysql-net.
+    ○ Variables de entorno: 
+        - MYSQL_ROOT_PASSWORD=userpass
+    ○ Volumenes:
+        - db/dumps:/docker-entrypoint-initdb.d
+        - db/data:/var/lib/mysql.
+
+● Node App.
+    ○ Nombre de la imagen: abassi/nodejs-server:10.0-dev
+    ○ Nombre contenedor: nodejs-container
+    ○ Network: mysql-net
+    ○ Puertos:
+        - 8000:3000
+    ○ Volumenes:
+        - "$PWD":/home/node/app
+
+● PHPMyAdmin.
+    ○ Nombre de la imagen: phpmyadmin/phpmyadmin
+    ○ Nombre contenedor: phpadmin
+    ○ Network: mysql-net
+    ○ Variables de entorno:
+        - PMA_HOST=mysql-server
+    ○ Puertos:
+        - 8085:80
+    ○ Volumenes
+
+##  Detener todos los contenedores
+
+docker stop $(docker ps -a -q)
+
 ##   Ejecutar contenedor de base de datos mysql
 
 ./start_mysql.sh mysql-net "$PWD"/db
@@ -10,9 +43,9 @@ Chequear que PHPMyAdmin está funcionando en ​http://localhost:8085
 
 ##   Ejecutar contenedor nodejs
 
-./serve_node_app_net.sh "$PWD" ws/index.js 8001 mysql-net
+./serve_node_app_net.sh "$PWD" ws/index.js 8000 mysql-net
 
-Chequear que la aplicación esté corriendo en ​http://localhost:8001
+Chequear que la aplicación esté corriendo en ​http://localhost:8000
 
 ##   Para ejecutar el contenedor del compilador de typescript
 
