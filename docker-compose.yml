@@ -8,26 +8,11 @@ services:
         environment: 
             MYSQL_ROOT_PASSWORD: userpass
         volumes: 
-            - ./db/data:/var/lib/mysql
             - ./db/dumps:/docker-entrypoint-initdb.d
+            - ./db/data:/var/lib/mysql
         networks: 
             - mysql-net
 
-    nodejs-container:
-        image: abassi/nodejs-server:10.0-dev
-        hostname: nodejs-container
-        container_name: nodejs-container
-        restart: always
-        volumes: 
-            - .:/home/node/app
-        networks: 
-            - mysql-net
-        depends_on: 
-            - mysql-server
-        ports: 
-            - "8000:3000"
-        command: nodemon /home/node/app/ws/index.js
-    
     phpadmin:
         image: phpmyadmin/phpmyadmin
         hostname: phpadmin
@@ -43,6 +28,21 @@ services:
             - mysql-server
         ports: 
             - "8085:80"
+
+    nodejs-container:
+        image: abassi/nodejs-server:10.0-dev
+        hostname: nodejs-container
+        container_name: nodejs-container
+        restart: always
+        volumes: 
+            - .:/home/node/app
+        networks: 
+            - mysql-net
+        depends_on: 
+            - mysql-server
+        ports: 
+            - "8000:3000"
+        command: nodemon /home/node/app/ws/index.js
 networks: 
     mysql-net:
         driver: bridge
