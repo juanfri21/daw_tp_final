@@ -39,6 +39,18 @@ docker-compose down
 En caso de que no se cargue la lista de dispositivos detenga la aplicacion y vuelva a levantarla.
 Esto se debe a que el contenedor de nodejs se ejecuta antes de que la base de datos este totalmente cargada.
 
+Otra forma de levantar los contenedores sin problemas de sincronizacion es ejecutar los siguientes comandos:
+```sh
+
+docker-compose up -d mysql-server
+
+```
+Luego de que se cree la base de datos, ejecutar el siguiente comando:
+
+```sh
+docker-compose up -d phpadmin nodejs-container
+```
+
 # Tecnologias utilizadas
 
 -   TypeScript
