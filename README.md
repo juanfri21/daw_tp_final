@@ -35,7 +35,10 @@ Para detener la aplicacion ejecutar el siguiente comando:
 
 docker-compose down
 
-``` 
+```
+En caso de que no se cargue la lista de dispositivos detenga la aplicacion y vuelva a levantarla.
+Esto se debe a que el contenedor de nodejs se ejecuta antes de que la base de datos este totalmente cargada.
+
 # Tecnologias utilizadas
 
 -   TypeScript
